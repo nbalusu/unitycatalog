@@ -30,18 +30,24 @@ public class HibernateUtil {
             }
 
             Configuration configuration = new Configuration();
-            configuration.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
+            System.out.println("yo in  hibernate");
 
             if ("test".equals(properties.getProperty("server.env"))) {
+                System.out.println("in  hibernate wtf!!");
+                configuration.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
                 configuration.setProperty("hibernate.connection.url", "jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1");
                 configuration.setProperty("hibernate.hbm2ddl.auto", "create-drop");
                 LOGGER.debug("Hibernate configuration set for testing");
             } else {
-                configuration.setProperty("hibernate.connection.url", "jdbc:h2:file:./etc/db/h2db;DB_CLOSE_DELAY=-1");
+                System.out.println("in  hibernate");
+                configuration.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
+                configuration.setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:55000/postgres");
+                configuration.setProperty("hibernate.connection.username", "postgres");
+                configuration.setProperty("hibernate.connection.password", "postgrespw");
                 configuration.setProperty("hibernate.hbm2ddl.auto", "update");
-                LOGGER.debug("Hibernate configuration set for production");
+                LOGGER.info("Hibernate configuration set for production");
             }
-            configuration.setProperty("hibernate.show_sql", "false");
+            configuration.setProperty("hibernate.show_sql", "true");
             configuration.setProperty("hibernate.archive.autodetection", "class");
             configuration.setProperty("hibernate.archive.scan.packages", "com.databricks.unitycatalog.persist.dao");
             configuration.setProperty("hibernate.use_sql_comments", "true");

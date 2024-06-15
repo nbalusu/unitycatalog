@@ -75,7 +75,7 @@ public class UnityCatalogServer {
   }
 
   public static void main(String[] args) {
-    int port = 8080;
+    int port = 8086;
     if (args.length > 0) {
       port = Integer.parseInt(args[0]);
     }
@@ -83,6 +83,7 @@ public class UnityCatalogServer {
     UnityCatalogServer unityCatalogServer = new UnityCatalogServer(port + 1);
     unityCatalogServer.printArt();
     unityCatalogServer.start();
+    System.out.println("started server at " + port);
     // Start URL transcoder
     Vertx vertx = Vertx.vertx();
     Verticle transcodeVerticle = new URLTranscoderVerticle(port, port + 1);

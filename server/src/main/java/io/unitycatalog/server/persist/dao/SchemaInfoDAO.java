@@ -23,7 +23,7 @@ import java.util.UUID;
 public class SchemaInfoDAO {
 
     @Id
-    @Column(name = "id", columnDefinition = "BINARY(16)")
+    @Column(name = "id", columnDefinition = "UUID")
     private UUID schemaId;
 
     @Column(name = "full_name")

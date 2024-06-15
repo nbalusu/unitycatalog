@@ -8,6 +8,7 @@ import io.unitycatalog.server.persist.dao.TableInfoDAO;
 import io.unitycatalog.server.utils.ValidationUtils;
 import lombok.Getter;
 import org.hibernate.query.Query;
+import org.hibernate.type.StandardBasicTypes;
 import io.unitycatalog.server.exception.ErrorCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -213,13 +214,23 @@ public class TableRepository {
                                       Boolean omitColumns) {
         List<TableInfo> result = new ArrayList<>();
         String returnNextPageToken = null;
-        String hql = "FROM TableInfoDAO t WHERE t.schemaId = :schemaId and " +
-                "(t.updatedAt < :pageToken OR :pageToken is null) order by t.updatedAt desc";
+
         try (Session session = sessionFactory.openSession()) {
             String schemaId = getSchemaId(session, catalogName, schemaName);
-            Query<TableInfoDAO> query = session.createQuery(hql, TableInfoDAO.class);
-            query.setParameter("schemaId", UUID.fromString(schemaId));
-            query.setParameter("pageToken", convertMillisToDate(nextPageToken));
+            System.out.println("### schemaId " + schemaId);
+            System.out.println("### pageToken " + convertMillisToDate(nextPageToken));
+            Query<TableInfoDAO> query = null;
+            if (nextPageToken != null) {
+                String hql = "FROM TableInfoDAO t WHERE t.schemaId = :schemaId and " +
+                        "(t.updatedAt < :pageToken OR :pageToken is null) order by t.updatedAt desc";
+                query = session.createQuery(hql, TableInfoDAO.class);
+                query.setParameter("schemaId", UUID.fromString(schemaId));
+                query.setParameter("pageToken", convertMillisToDate(nextPageToken));
+            } else {
+                String hql = "FROM TableInfoDAO t WHERE t.schemaId = :schemaId order by t.updatedAt desc";
+                query = session.createQuery(hql, TableInfoDAO.class);
+                query.setParameter("schemaId", UUID.fromString(schemaId));
+            }
             query.setMaxResults(maxResults);
             List<TableInfoDAO> tableInfoDAOList = query.list();
 

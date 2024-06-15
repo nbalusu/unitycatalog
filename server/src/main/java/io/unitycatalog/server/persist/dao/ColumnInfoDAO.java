@@ -46,11 +46,11 @@ public class ColumnInfoDAO {
     private String name;
 
     @Lob
-    @Column(name = "type_text", nullable = false, columnDefinition = "MEDIUMTEXT")
+    @Column(name = "type_text", nullable = false, columnDefinition = "VARCHAR(255)")
     private String typeText;
 
     @Lob
-    @Column(name = "type_json", nullable = false, columnDefinition = "MEDIUMTEXT")
+    @Column(name = "type_json", nullable = false, columnDefinition = "VARCHAR(255)")
     private String typeJson;
 
     @Column(name = "type_name", nullable = false, length = 32)

@@ -78,6 +78,7 @@ public class CatalogOperations {
     }
 
     public CatalogInfoDAO getCatalogInfoDAO(Session session, String name) {
+        System.out.println("####### name " + name);
         Query<CatalogInfoDAO> query = session
                 .createQuery("FROM CatalogInfoDAO WHERE name = :value", CatalogInfoDAO.class);
         query.setParameter("value", name);

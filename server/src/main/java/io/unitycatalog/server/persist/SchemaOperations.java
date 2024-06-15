@@ -78,6 +78,8 @@ public class SchemaOperations {
     }
 
     public SchemaInfoDAO getSchemaInfoDAO(Session session, String fullName) {
+        System.out.println("####### schema fullName " + fullName);
+
         Query<SchemaInfoDAO> query = session.createQuery("FROM SchemaInfoDAO WHERE fullName = :value", SchemaInfoDAO.class);
         query.setParameter("value", fullName);
         query.setMaxResults(1);

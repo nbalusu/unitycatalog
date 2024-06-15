@@ -23,7 +23,7 @@ import java.util.UUID;
 public class CatalogInfoDAO {
 
     @Id
-    @Column(name = "id", columnDefinition = "BINARY(16)")
+    @Column(name = "id", columnDefinition = "UUID")
     private UUID id;
 
     @Column(name = "name")

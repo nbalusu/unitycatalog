@@ -25,10 +25,10 @@ import java.util.UUID;
 public class TableInfoDAO {
 
     @Id
-    @Column(name = "id", columnDefinition = "BINARY(16)")
+    @Column(name = "id", columnDefinition = "UUID")
     private UUID id;
 
-    @Column(name = "schema_id", columnDefinition = "BINARY(16)")
+    @Column(name = "schema_id", columnDefinition = "UUID")
     private UUID schemaId;
 
     @Column(name = "name")
